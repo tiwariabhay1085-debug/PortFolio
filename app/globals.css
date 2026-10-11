@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark is the default theme. The .light class (set on <html>) swaps the variables. */
+:root {
+  --bg: 7 8 12;
+  --surface: 14 16 24;
+  --fg: 232 235 244;
+  --muted: 150 157 178;
+  --line: 255 255 255;
+  --electric: 90 134 255;
+  --iris: 160 125 255;
+  --aqua: 56 207 232;
+  --btn-from: 45 90 240;
+  --btn-to: 110 62 230;
+  --glass-bg: rgb(255 255 255 / 0.045);
+  --glass-shadow: 0 1px 0 rgb(255 255 255 / 0.05) inset, 0 24px 48px -28px rgb(0 0 0 / 0.7);
+  --glow-o: 0.24;
+  color-scheme: dark;
+}
+
+:root.light {
+  --bg: 246 247 251;
+  --surface: 255 255 255;
+  --fg: 15 18 32;
+  --muted: 82 90 110;
+  --line: 15 23 42;
+  --electric: 37 83 235;
+  --iris: 109 55 220;
+  --aqua: 8 116 146;
+  --glass-bg: rgb(255 255 255 / 0.72);
+  --glass-shadow: 0 1px 2px rgb(15 23 42 / 0.05), 0 20px 40px -26px rgb(15 23 42 / 0.25);
+  --glow-o: 0.16;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgb(var(--electric) / 0.35);
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--electric));
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+@layer components {
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid rgb(var(--line) / 0.1);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-hover {
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .glass-hover:hover {
+    transform: translateY(-3px);
+    border-color: rgb(var(--electric) / 0.5);
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(rgb(var(--line) / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--line) / 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 30%, #000 25%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 65% at 50% 30%, #000 25%, transparent 75%);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-btn-from to-btn-to px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-electric/20 transition hover:brightness-110;
+  }
+
+  .btn-secondary {
+    @apply glass inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-fg transition hover:border-electric/50;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
